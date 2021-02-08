@@ -16,7 +16,7 @@ namespace BillPay.Domain.Entity
         /// <summary>
         /// Gets or sets the original value.
         /// </summary>
-        public decimal OriginalValue { get; set; }
+        public decimal? OriginalValue { get; set; }
 
         /// <summary>
         /// Gets or sets the expiration date.

@@ -19,7 +19,7 @@ namespace BillPay.Domain.Interface.Validator
         /// Validador contendo as regras para o fluxo de Adicionar.
         /// </summary>
         /// <returns>Validador com as regras assinadas para o fluxo de Adicionar.</returns>
-        IBaseValidator<T> ValidadorAdicao();
+        IBaseValidator<T> AddValidator();
 
         /// <summary>
         /// Validador contendo as regras para o fluxo de Atualizar.

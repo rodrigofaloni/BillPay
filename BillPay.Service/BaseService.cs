@@ -121,7 +121,7 @@ namespace BillPay.Service
         /// <param name="entidade">The entity.</param>
         protected virtual void InternalInsert(T entity)
         {
-            var resultadoValidacao = this.Validador.ValidadorAdicao().Validar(entity);
+            var resultadoValidacao = this.Validador.AddValidator().Validar(entity);
             this.GarantirValidacao(resultadoValidacao);
             this.BaseRepository.Insert(entity);
         }

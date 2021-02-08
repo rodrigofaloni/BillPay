@@ -8,7 +8,7 @@ namespace BillPay.Domain.Validator
 {
     public abstract class BaseValidator<T> : AbstractValidator<T>, IBaseValidator<T> where T : BaseEntity
     {
-        public virtual IBaseValidator<T> ValidadorAdicao()
+        public virtual IBaseValidator<T> AddValidator()
         {
             return this;
         }
@@ -47,7 +47,7 @@ namespace BillPay.Domain.Validator
 
         protected Inconsistency InconsistenciaObjetoVazio()
         {
-            return new Inconsistency("Id", "Objeto vazio ou não informado.");
+            return new Inconsistency("Id", "Empty or not informed object.");
         }
 
         /// <summary>
@@ -56,13 +56,12 @@ namespace BillPay.Domain.Validator
         /// <typeparam name="TProperty">Tipo da propriedade para composição da regra.</typeparam>
         /// <param name="propriedade">A propriedade de fato para construção da regra.</param>
         /// <returns>RuleBuilder para continuação de possíveis regras.</returns>
-        protected IRuleBuilderOptions<T, TProperty> CampoObrigatorio<TProperty>(Expression<Func<T, TProperty>> propriedade)
+        protected IRuleBuilderOptions<T, TProperty> RequiredField<TProperty>(Expression<Func<T, TProperty>> propriedade)
         {
             return RuleFor(propriedade)
                 .Cascade(CascadeMode.StopOnFirstFailure)
-                .NotNull()
-                .NotEmpty()
-                .WithMessage("Campo Obrigatório não informado.");
+                .NotNull().WithMessage("This field is required.")
+                .NotEmpty().WithMessage("This field is required.");
         }
     }
 }

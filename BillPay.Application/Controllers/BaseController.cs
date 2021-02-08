@@ -22,9 +22,9 @@ namespace BillPay.Application.Controllers
         }
 
         /// <summary>
-        /// Lista todos os registros.
+        /// Lists all records.
         /// </summary>
-        /// <returns>Retorna a lista.</returns>
+        /// <returns>Return the records.</returns>
         [HttpGet]
         public virtual IEnumerable<TEntity> Get()
         {

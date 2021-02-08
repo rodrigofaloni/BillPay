@@ -18,28 +18,18 @@ namespace BillPay.Domain.Validator
             this.billRepository = billRepository;
         }
 
-        public override IBaseValidator<Bill> ValidadorAdicao()
+        public override IBaseValidator<Bill> AddValidator()
         {
-            this.AssinarRegrasComum();
-            return base.ValidadorAdicao();
+            this.CommonRules();
+            return base.AddValidator();
         }
 
-        private void AssinarRegrasComum()
+        private void CommonRules()
         {
-            this.CampoObrigatorio(x => x.Name).When(x => x != null);
-            ////this.CampoObrigatorio(x => x.Login).When(x => x != null);
-            ////this.CampoObrigatorio(x => x.Senha).When(x => x != null);
-
-            //////Valida tamanho do login
-            ////this.RuleFor(x => x.Login).Must(x => x.Length <= 200)
-            ////    .WithMessage("O tamanho para o login é de 20 carateres")
-            ////    .When(x => x != null && !string.IsNullOrWhiteSpace(x.Login));
-
-            //////Valida tamanho do login
-            ////this.RuleFor(x => x).Must(x => repositorioUsuario.QtdeUsuarioMesmoLogin(x) <= 0)
-            ////    .WithMessage("O login informado já está sendo usado por outro usuário")
-            ////    .WithName("Login")
-            ////    .When(x => x != null && !string.IsNullOrWhiteSpace(x.Nome));
+            this.RequiredField(x => x.Name).When(x => x != null);
+            this.RequiredField(x => x.PayDay).When(x => x != null);
+            this.RequiredField(x => x.OriginalValue).When(x => x != null);
+            this.RequiredField(x => x.ExpirationDate).When(x => x != null);
         }
     }
 }

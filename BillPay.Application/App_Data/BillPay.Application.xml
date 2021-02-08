@@ -6,9 +6,9 @@
     <members>
         <member name="M:BillPay.Application.Controllers.BaseController`2.Get">
             <summary>
-            Lista todos os registros.
+            Lists all records.
             </summary>
-            <returns>Retorna a lista.</returns>
+            <returns>Return the records.</returns>
         </member>
         <member name="M:BillPay.Application.Controllers.BaseController`2.Get(System.String)">
             <summary>
