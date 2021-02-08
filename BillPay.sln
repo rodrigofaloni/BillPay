@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1-Application", "1-Application", "{A55E4DA4-526C-401F-A34C-0FB8B4134101}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BillPay.Application", "BillPay.Application\BillPay.Application.csproj", "{C12D307C-85D7-41E2-838B-11E249B9789B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2-Domain", "2-Domain", "{B941EE4E-3024-4E6C-A421-1399F79498F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BillPay.Domain", "BillPay.Domain\BillPay.Domain.csproj", "{1DB83193-6131-40AB-8EA0-EE6666FB7092}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3-Service", "3-Service", "{6442E9F0-8B89-4B7A-92C4-E7411D3B4DD4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BillPay.Service", "BillPay.Service\BillPay.Service.csproj", "{51071CE8-72FB-418E-9D2C-D2B49840972A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4-Data", "4-Data", "{9614AA1B-232A-4433-A8A5-33BDC3247977}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BillPay.Data", "BillPay.Data\BillPay.Data.csproj", "{3DEF58CB-9218-4E49-B841-7742C5CFB818}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C12D307C-85D7-41E2-838B-11E249B9789B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C12D307C-85D7-41E2-838B-11E249B9789B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C12D307C-85D7-41E2-838B-11E249B9789B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C12D307C-85D7-41E2-838B-11E249B9789B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DB83193-6131-40AB-8EA0-EE6666FB7092}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DB83193-6131-40AB-8EA0-EE6666FB7092}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DB83193-6131-40AB-8EA0-EE6666FB7092}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DB83193-6131-40AB-8EA0-EE6666FB7092}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51071CE8-72FB-418E-9D2C-D2B49840972A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51071CE8-72FB-418E-9D2C-D2B49840972A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51071CE8-72FB-418E-9D2C-D2B49840972A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51071CE8-72FB-418E-9D2C-D2B49840972A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DEF58CB-9218-4E49-B841-7742C5CFB818}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DEF58CB-9218-4E49-B841-7742C5CFB818}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DEF58CB-9218-4E49-B841-7742C5CFB818}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DEF58CB-9218-4E49-B841-7742C5CFB818}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C12D307C-85D7-41E2-838B-11E249B9789B} = {A55E4DA4-526C-401F-A34C-0FB8B4134101}
+		{1DB83193-6131-40AB-8EA0-EE6666FB7092} = {B941EE4E-3024-4E6C-A421-1399F79498F6}
+		{51071CE8-72FB-418E-9D2C-D2B49840972A} = {6442E9F0-8B89-4B7A-92C4-E7411D3B4DD4}
+		{3DEF58CB-9218-4E49-B841-7742C5CFB818} = {9614AA1B-232A-4433-A8A5-33BDC3247977}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {61759C21-1A7B-4D93-9D04-6A1D01B4CA89}
+	EndGlobalSection
+EndGlobal
