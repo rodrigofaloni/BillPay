@@ -26,7 +26,7 @@ namespace BillPay.Application.Controllers
         /// </summary>
         /// <returns>Retorna a lista.</returns>
         [HttpGet]
-        public IEnumerable<TEntity> Get()
+        public virtual IEnumerable<TEntity> Get()
         {
             var lista = _service.List();
 
@@ -41,7 +41,7 @@ namespace BillPay.Application.Controllers
         /// <param name="id">O id.</param>
         /// <returns>A entidade consultada.</returns>
         [HttpGet("{id}")]
-        public TEntity Get(string id)
+        public virtual TEntity Get(string id)
         {
             var entidade = _service.GetById(id);
 
@@ -56,8 +56,9 @@ namespace BillPay.Application.Controllers
         /// <param name="entidade">A entidade a ser incluida.</param>
         /// <returns>Retorna a entidade incluida.</returns>
         [HttpPost]
-        public string Post([FromBody]TEntity entidade)
+        public virtual string Post([FromBody] TEntity entidade)
         {
+            entidade.Id = _service.GetNextId();
             _service.Insert(entidade);
             return entidade.Id;
         }
@@ -69,9 +70,9 @@ namespace BillPay.Application.Controllers
         /// <param name="entidade">A entidade a ser alterada.</param>
         /// <returns>A entidade alterada.</returns>
         [HttpPut("{id}")]
-        public string Put(int id, [FromBody]TEntity entidade)
+        public virtual string Put(string id, [FromBody] TEntity entidade)
         {
-            if (id <= 0) throw new BusinessException<ResultValidator>("id", "Informe o id.");
+            if (string.IsNullOrEmpty(id)) throw new BusinessException<ResultValidator>("id", "Informe o id.");
 
             _service.Update(entidade);
             return entidade.Id;
@@ -83,7 +84,7 @@ namespace BillPay.Application.Controllers
         /// <param name="id">O id da entidade a ser excluida.</param>
         /// <returns>Retorno da operação da exclusão.</returns>
         [HttpDelete("{id}")]
-        public void Delete(string id)
+        public virtual void Delete(string id)
         {
             var entidade = _service.GetById(id);
             if (entidade != null) _service.Remove(entidade);
