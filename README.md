@@ -1,2 +1,2 @@
 # BillPay
-WEB API with .NET CORE
+API with registration, listing, editing, visualization and deletion of accounts payable.
