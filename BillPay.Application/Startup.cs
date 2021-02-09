@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
 using BillPay.Application.Middlewares;
 using BillPay.Data;
 using BillPay.Domain.Interface.Repository;
@@ -11,13 +5,13 @@ using BillPay.Domain.Interface.Service;
 using BillPay.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using System.IO;
+using System.Reflection;
 
 namespace BillPay.Application
 {
@@ -51,7 +45,7 @@ namespace BillPay.Application
         {
             services.AddDbContext<BaseContext>(options => options.UseInMemoryDatabase(databaseName: "MockDB"));
             this.RegisterDependencies(services);
-            this.RegistraDadosSwagger(services);
+            this.RegisterSwaggerData(services);
             services.AddControllers();
         }
 
@@ -97,10 +91,10 @@ namespace BillPay.Application
         }
 
         /// <summary>
-        /// Responsável em registrar os dados swagger.
+        /// Registers the swagger data.
         /// </summary>
-        /// <param name="services">Os services.</param>
-        private void RegistraDadosSwagger(IServiceCollection services)
+        /// <param name="services">The services.</param>
+        private void RegisterSwaggerData(IServiceCollection services)
         {
             services.AddSwaggerGen(options =>
             {
@@ -108,36 +102,8 @@ namespace BillPay.Application
                 {
                     Title = "INTEGRATION API FOR ACCOUNTS PAYABLE",
                     Version = "v1",
-                    Description = "REST API CREATED WITH ASP.NET CORE 3.1"
+                    Description = "REST API CREATED WITH ASP.NET CORE"
                 });
-
-                ////// Colocar JWT no Swagger
-                ////options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-                ////{
-                ////    Description = "Cabeçalho de autorização JWT usando o esquema Bearer. \r\n\r\n Digite 'Bearer' [espaço] e, em seguida, seu token na entrada de texto abaixo.\r\n\r\nExemplo: \"Bearer 12345abcdef\"",
-                ////    Name = "Authorization",
-                ////    In = ParameterLocation.Header,
-                ////    Type = SecuritySchemeType.ApiKey,
-                ////    Scheme = "Bearer"
-                ////});
-
-                ////options.AddSecurityRequirement(new OpenApiSecurityRequirement()
-                ////{
-                ////    {
-                ////        new OpenApiSecurityScheme
-                ////        {
-                ////            Reference = new OpenApiReference
-                ////            {
-                ////                Type = ReferenceType.SecurityScheme,
-                ////                Id = "Bearer"
-                ////            },
-                ////            Scheme = "oauth2",
-                ////            Name = "Bearer",
-                ////            In = ParameterLocation.Header,
-                ////        },
-                ////        new List<string>()
-                ////    }
-                ////});
 
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(@".\App_Data", xmlFile);

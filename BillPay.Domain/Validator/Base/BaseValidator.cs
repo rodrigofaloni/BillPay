@@ -6,56 +6,80 @@ using System.Linq.Expressions;
 
 namespace BillPay.Domain.Validator
 {
+    /// <summary>
+    /// Class thats implements the base validator.
+    /// </summary>
     public abstract class BaseValidator<T> : AbstractValidator<T>, IBaseValidator<T> where T : BaseEntity
     {
+        /// <summary>
+        /// Adds the validator.
+        /// </summary>
+        /// <returns>Return the result of validator</returns>
         public virtual IBaseValidator<T> AddValidator()
         {
             return this;
         }
 
-        public virtual IBaseValidator<T> ValidadorAtualizacao()
+        /// <summary>
+        /// Updates the validator.
+        /// </summary>
+        /// <returns>Return the result of validator</returns>
+        public virtual IBaseValidator<T> UpdateValidator()
         {
             return this;
         }
 
-        public virtual IBaseValidator<T> ValidadorRemocao()
+        /// <summary>
+        /// Deletes the validator.
+        /// </summary>
+        /// <returns>Return the result of validator</returns>
+        public virtual IBaseValidator<T> DeleteValidator()
         {
             return this;
         }
 
-        public ResultValidator Validar(T objeto)
+        /// <summary>
+        /// Validates the specified objeto.
+        /// </summary>
+        /// <param name="objectItem">The object.</param>
+        /// <returns>Return the result of validator</returns>
+        public ResultValidator ValidateMethod(T objeto)
         {
             if (objeto == null)
             {
-                return new ResultValidator(this.InconsistenciaObjetoVazio());
+                return new ResultValidator(this.EmptyObjectInconsistency());
             }
 
-            var inconsistencias = new ResultValidator();
+            var inconsistencies = new ResultValidator();
 
-            var validacaoFluent = this.Validate(objeto);
+            var validationFluent = this.Validate(objeto);
 
-            if (!validacaoFluent.IsValid)
+            if (!validationFluent.IsValid)
             {
-                foreach (var erro in validacaoFluent.Errors)
+                foreach (var error in validationFluent.Errors)
                 {
-                    inconsistencias.AdicionarInconsistencia(new Inconsistency(erro.PropertyName, erro.ErrorMessage) { });
+                    inconsistencies.AddInconsistency(new Inconsistency(error.PropertyName, error.ErrorMessage) { });
                 }
             }
 
-            return inconsistencias;
+            return inconsistencies;
         }
 
-        protected Inconsistency InconsistenciaObjetoVazio()
+        /// <summary>
+        /// Empties the object inconsistency.
+        /// </summary>
+        /// <returns>Return the inconsistency.</returns>
+        protected Inconsistency EmptyObjectInconsistency()
         {
             return new Inconsistency("Id", "Empty or not informed object.");
         }
 
         /// <summary>
-        /// Regra básica para campo obrigátorio (not null).
+        /// Requireds the field.
         /// </summary>
-        /// <typeparam name="TProperty">Tipo da propriedade para composição da regra.</typeparam>
-        /// <param name="propriedade">A propriedade de fato para construção da regra.</param>
-        /// <returns>RuleBuilder para continuação de possíveis regras.</returns>
+        /// <typeparam name="TProperty">The type of the property.</typeparam>
+        /// <param name="propriedade">The propriedade.</param>
+        /// <returns>Return the result of validation.</returns>
         protected IRuleBuilderOptions<T, TProperty> RequiredField<TProperty>(Expression<Func<T, TProperty>> propriedade)
         {
             return RuleFor(propriedade)

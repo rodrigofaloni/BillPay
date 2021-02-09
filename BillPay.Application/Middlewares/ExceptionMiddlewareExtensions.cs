@@ -7,103 +7,130 @@ using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace BillPay.Application.Middlewares
 {
+    /// <summary>
+    /// The extension of middleware exception.
+    /// </summary>
     public static class ExceptionMiddlewareExtensions
     {
+        /// <summary>
+        /// Configures the exception handler.
+        /// </summary>
+        /// <param name="app">The application.</param>
         public static void ConfigureExceptionHandler(this IApplicationBuilder app)
-    {
-        app.UseExceptionHandler(appError =>
         {
-            appError.Run(async context =>
+            app.UseExceptionHandler(appError =>
             {
-                var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
-                if (contextFeature == null) return;
+                appError.Run(async context =>
+                {
+                    var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
+                    if (contextFeature == null) return;
 
-                var (statusCode, objetoFalha) = ObterTipoFalha(contextFeature.Error);
-                var response = SerializarComIdentacao(objetoFalha);
+                    var (statusCode, objetoFalha) = GetErrorType(contextFeature.Error);
+                    var response = SerializeWithIdentification(objetoFalha);
 
-                context.Response.StatusCode = statusCode;
-                context.Response.ContentType = "application/json";
-                await context.Response.WriteAsync(response);
+                    context.Response.StatusCode = statusCode;
+                    context.Response.ContentType = "application/json";
+                    await context.Response.WriteAsync(response);
+                });
             });
-        });
-    }
+        }
 
-    private static (int, ControlledReturn) ObterTipoFalha(Exception excecao)
-    {
+        /// <summary>
+        /// Responsible to get the error type.
+        /// </summary>
+        /// <param name="exception">The exception.</param>
+        /// <returns>
+        /// Return the controlled return.
+        /// </returns>
+        private static (int, ControlledReturn) GetErrorType(Exception exception)
+        {
             var statusCode = HttpStatusCode.InternalServerError;
-            var falhas = new List<InconsistencyModel> { new InconsistencyModel { Mensagem = MensagemErroExcecao(excecao), Propriedade = null } };
-            var mensagem = "Erro interno na api do whatsapp. ";
+            var falhas = new List<InconsistencyModel> { new InconsistencyModel { Message = ErrorMessageException(exception), Property = null } };
+            var mensagem = "Internal error in API.";
 
-            if (excecao is ParameterException parametroException)
+            if (exception is ParameterException parametroException)
             {
                 statusCode = HttpStatusCode.BadRequest;
-                falhas = new List<InconsistencyModel> { new InconsistencyModel { Mensagem = parametroException.Message, Propriedade = parametroException.Propriedade } };
-                mensagem = "Parâmetro(s) incorreto(s). ";
+                falhas = new List<InconsistencyModel> { new InconsistencyModel { Message = parametroException.Message, Property = parametroException.Property } };
+                mensagem = "Incorrect parameter(s).";
             }
 
-            if (excecao is BusinessException<ResultValidator> validacaoException)
+            if (exception is BusinessException<ResultValidator> validacaoException)
             {
                 statusCode = HttpStatusCode.PreconditionFailed;
-                falhas = ConverterInconsistencias(validacaoException.Detalhes.ObterInconsistencia());
-                mensagem = "Existem inconsistências.";
+                falhas = ConvertInconsistencies(validacaoException.Details.GetInconsistencies());
+                mensagem = "There are inconsistencies.";
             }
 
-            if (excecao is NotFoundException)
+            if (exception is NotFoundException)
             {
                 statusCode = HttpStatusCode.NotFound;
-                mensagem = "Nenhum resultado encontrado. ";
+                mensagem = "No results found.";
                 falhas = new List<InconsistencyModel>();
             }
 
-            return ((int)statusCode, new ControlledReturn { StatusCode = statusCode, Inconsistencias = falhas, Mensagem = mensagem });
+            return ((int)statusCode, new ControlledReturn { StatusCode = statusCode, Inconsistencies = falhas, Message = mensagem });
         }
 
-    private static string MensagemErroExcecao(Exception excecao)
-    {
-        var mensagem = new StringBuilder();
-        mensagem.AppendFormat("Erro: {0}\n", excecao.Message);
-        mensagem.AppendFormat("Exceção: {0}\n", excecao.Message);
-        mensagem.AppendFormat("Pilha: {0}\n", excecao.StackTrace);
-        mensagem.AppendFormat("Source: {0}\n", excecao.Source);
-
-        while (excecao.InnerException != null)
+        /// <summary>
+        /// Errors the message exception.
+        /// </summary>
+        /// <param name="excecao">The excecao.</param>
+        /// <returns>Return the error message exception.</returns>
+        private static string ErrorMessageException(Exception excecao)
         {
-            excecao = excecao.InnerException;
-            mensagem.AppendFormat("Exceção: {0}\n", excecao.Message);
-            mensagem.AppendFormat("Pilha: {0}\n", excecao.StackTrace);
+            var mensagem = new StringBuilder();
+            mensagem.AppendFormat("Error: {0}\n", excecao.Message);
+            mensagem.AppendFormat("Exception: {0}\n", excecao.Message);
+            mensagem.AppendFormat("StackTrace: {0}\n", excecao.StackTrace);
             mensagem.AppendFormat("Source: {0}\n", excecao.Source);
+
+            while (excecao.InnerException != null)
+            {
+                excecao = excecao.InnerException;
+                mensagem.AppendFormat("Exception: {0}\n", excecao.Message);
+                mensagem.AppendFormat("StackTrace: {0}\n", excecao.StackTrace);
+                mensagem.AppendFormat("Source: {0}\n", excecao.Source);
+            }
+
+            return mensagem.ToString();
         }
 
-        return mensagem.ToString();
-    }
-
-    private static List<InconsistencyModel> ConverterInconsistencias(List<Inconsistency> lista)
-    {
-        var listaConvertida = new List<InconsistencyModel>();
-        if (lista != null && lista.Count > 0)
+        /// <summary>
+        /// Converts the inconsistencies.
+        /// </summary>
+        /// <param name="listItem">The lista.</param>
+        /// <returns>Return the list of inconsistencies.</returns>
+        private static List<InconsistencyModel> ConvertInconsistencies(List<Inconsistency> listItem)
         {
-            lista.ForEach(i => listaConvertida.Add(new InconsistencyModel() { Mensagem = i.Mensagem, Propriedade = i.PropriedadeValidada }));
+            var convertedList = new List<InconsistencyModel>();
+            if (listItem != null && listItem.Count > 0)
+            {
+                listItem.ForEach(i => convertedList.Add(new InconsistencyModel() { Message = i.Message, Property = i.ValidateProperty }));
+            }
+
+            return convertedList;
         }
 
-        return listaConvertida;
-    }
-
-    private static string SerializarComIdentacao(object objeto)
-    {
-        var settings = new JsonSerializerSettings
+        /// <summary>
+        /// Serializes the with identification.
+        /// </summary>
+        /// <param name="objeto">The objeto.</param>
+        /// <returns>Return the json object.</returns>
+        private static string SerializeWithIdentification(object objeto)
         {
-            Formatting = Formatting.Indented,
-            ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-        };
+            var settings = new JsonSerializerSettings
+            {
+                Formatting = Formatting.Indented,
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+            };
 
-        return JsonConvert.SerializeObject(objeto, settings);
+            return JsonConvert.SerializeObject(objeto, settings);
+        }
     }
-}
 }

@@ -1,24 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BillPay.Domain.Validator.Base
 {
+    /// <summary>
+    /// Class that implements the parameter exception.
+    /// </summary>
     public class ParameterException : Exception
     {
         /// <summary>
-        /// Obtém ou define o nome da propriedade para vincular a inconsistência.
+        /// Gets or sets the property.
         /// </summary>
-        public string Propriedade { get; set; }
+        /// <value>
+        /// The property.
+        /// </value>
+        public string Property { get; set; }
 
         /// <summary>
-        /// Inicializa a instancia da classe <see cref="ParametroException"/>.
+        /// Initializes a new instance of the <see cref="ParameterException"/> class.
         /// </summary>
-        /// <param name="propriedade">A propriedade.</param>
-        /// <param name="mensagem">A mensagem.</param>
-        public ParameterException(string propriedade, string mensagem) : base(mensagem)
+        /// <param name="property">The property.</param>
+        /// <param name="message">The message.</param>
+        public ParameterException(string property, string message) : base(message)
         {
-            this.Propriedade = propriedade;
+            this.Property = property;
         }
     }
 }

@@ -1,36 +1,36 @@
 ﻿using BillPay.Domain.Entity;
 using BillPay.Domain.Validator;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BillPay.Domain.Interface.Validator
 {
+    /// <summary>
+    /// Interface thats implements the base validator.
+    /// </summary>
     public interface IBaseValidator<T> where T : BaseEntity
     {
         /// <summary>
-        /// Validar o objeto informado como parâmetro.
+        /// Validates the specified objeto.
         /// </summary>
-        /// <param name="objeto">O objeto para validação.</param>
-        /// <returns>Resultado da validação contendo os possíveis erros.</returns>
-        ResultValidator Validar(T objeto);
+        /// <param name="objectItem">The object.</param>
+        /// <returns>Return the result of validator</returns>
+        ResultValidator ValidateMethod(T objectItem);
 
         /// <summary>
-        /// Validador contendo as regras para o fluxo de Adicionar.
+        /// Adds the validator.
         /// </summary>
-        /// <returns>Validador com as regras assinadas para o fluxo de Adicionar.</returns>
+        /// <returns>Return the result of validator</returns>
         IBaseValidator<T> AddValidator();
 
         /// <summary>
-        /// Validador contendo as regras para o fluxo de Atualizar.
+        /// Updates the validator.
         /// </summary>
-        /// <returns>Validador com as regras assinadas para o fluxo de Atualizar.</returns>
-        IBaseValidator<T> ValidadorAtualizacao();
+        /// <returns>Return the result of validator</returns>
+        IBaseValidator<T> UpdateValidator();
 
         /// <summary>
-        /// Validador contendo as regras para o fluxo de Remover.
+        /// Deletes the validator.
         /// </summary>
-        /// <returns>Validador com as regras assinadas para o fluxo de Remover.</returns>
-        IBaseValidator<T> ValidadorRemocao();
+        /// <returns>Return the result of validator</returns>
+        IBaseValidator<T> DeleteValidator();
     }
 }

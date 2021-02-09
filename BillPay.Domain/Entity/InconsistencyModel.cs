@@ -1,25 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BillPay.Domain.Entity
+﻿namespace BillPay.Domain.Entity
 {
+    /// <summary>
+    /// Class that implements the inconsistency model.
+    /// </summary>
     public class InconsistencyModel
     {
         /// <summary>
-        /// Obtém ou define o nome da propriedade para vincular a inconsistência.
+        /// Gets or sets the property.
         /// </summary>
         /// <value>
-        /// O valor da propriedade.
+        /// The property.
         /// </value>
-        public string Propriedade { get; set; }
+        public string Property { get; set; }
 
         /// <summary>
-        /// Obtém ou define a mensagem que será vinculada a propriedade.
+        /// Gets or sets the message.
         /// </summary>
         /// <value>
-        /// O valor da mensagem.
+        /// The message.
         /// </value>
-        public string Mensagem { get; set; }
+        public string Message { get; set; }
     }
 }

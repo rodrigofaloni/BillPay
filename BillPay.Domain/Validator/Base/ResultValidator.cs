@@ -1,80 +1,81 @@
-﻿using BillPay.Domain.Entity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace BillPay.Domain.Validator
 {
+    /// <summary>
+    /// Class that implements the result validator.
+    /// </summary>
     [Serializable]
     public class ResultValidator
     {
         /// <summary>
-        /// Inicializa uma nova instância da classe <see cref="ResultadoValidacao"/>, que por default é válida.
+        /// Initializes a new instance of the <see cref="ResultValidator"/> class.
         /// </summary>
         public ResultValidator()
         {
-            this.ListaInconsistecias = null;
-            this.Valido = true;
+            this.InconsistencyList = null;
+            this.ResultValid = true;
         }
 
         /// <summary>
-        /// Inicializa uma nova instância da classe <see cref="ResultadoValidacao"/>, baseado em uma inconsistência.
+        /// Initializes a new instance of the <see cref="ResultValidator"/> class.
         /// </summary>
-        /// <param name="inconsistencia">The inconsistencia.</param>
-        public ResultValidator(Inconsistency inconsistencia)
+        /// <param name="inconsistency">The inconsistency.</param>
+        public ResultValidator(Inconsistency inconsistency)
         {
-            this.AdicionarInconsistencia(inconsistencia);
-            this.Valido = false;
+            this.AddInconsistency(inconsistency);
+            this.ResultValid = false;
         }
 
         /// <summary>
-        /// Obtém ou define se o resultado é válido ou não.
+        /// Gets or sets a value indicating whether [result valid].
         /// </summary>
         /// <value>
-        ///   <c>true</c> Caso for válido; caso contrário, <c>false</c>.
+        ///   <c>true</c> if [result valid]; otherwise, <c>false</c>.
         /// </value>
-        protected bool Valido { get; set; }
+        protected bool ResultValid { get; set; }
 
         /// <summary>
-        /// Obtém ou define a lista de inconsistências.
+        /// Gets or sets the inconsistency list.
         /// </summary>
         /// <value>
-        /// A lista de inconsistências caso existam.
+        /// The inconsistency list.
         /// </value>
-        protected List<Inconsistency> ListaInconsistecias { get; set; }
+        protected List<Inconsistency> InconsistencyList { get; set; }
 
         /// <summary>
-        /// Adicionar uma nova instância a lista já existente.
+        /// Adds the inconsistency.
         /// </summary>
-        /// <param name="inconsistencia">A inconsistência para adição.</param>
-        public void AdicionarInconsistencia(Inconsistency inconsistencia)
+        /// <param name="inconsistency">The inconsistency.</param>
+        public void AddInconsistency(Inconsistency inconsistency)
         {
-            if (this.ListaInconsistecias == null)
+            if (this.InconsistencyList == null)
             {
-                this.ListaInconsistecias = new List<Inconsistency>();
+                this.InconsistencyList = new List<Inconsistency>();
             }
 
-            this.ListaInconsistecias.Add(inconsistencia);
-            this.Valido = false;
+            this.InconsistencyList.Add(inconsistency);
+            this.ResultValid = false;
         }
 
         /// <summary>
-        /// Obter a lista de inconsistências.
+        /// Gets the inconsistencies.
         /// </summary>
-        /// <returns>Lista de inconsistências.</returns>
-        public List<Inconsistency> ObterInconsistencia()
+        /// <returns>Return the inconsistencies.</returns>
+        public List<Inconsistency> GetInconsistencies()
         {
-            return this.ListaInconsistecias.ToList();
+            return this.InconsistencyList.ToList();
         }
 
         /// <summary>
-        /// Diz se o resultado é válido.
+        /// Results is valid.
         /// </summary>
-        /// <returns>True caso seja válido, falso caso contrário.</returns>
-        public bool EhValido()
+        /// <returns>Return the result is valid.</returns>
+        public bool ResultIsValid()
         {
-            return this.Valido;
+            return this.ResultValid;
         }
     }
 }

@@ -7,9 +7,10 @@ using System;
 using System.Linq;
 
 namespace BillPay.Service
-{ /// <summary>
-  /// Class implements the base service.
-  /// </summary>
+{
+    /// <summary>
+    /// Class implements the base service.
+    /// </summary>
     public abstract class BaseService<T> : IBaseService<T> where T : BaseEntity
     {
         #region Properties
@@ -23,10 +24,10 @@ namespace BillPay.Service
         protected IBaseRepository<T> BaseRepository { get; set; }
 
         /// <summary>
-        /// Obtém ou define o validador utilizados para verificar as regras de négocio.
+        /// Gets the validador.
         /// </summary>
         /// <value>
-        /// O validado de fato.
+        /// The validador.
         /// </value>
         protected abstract IBaseValidator<T> Validador { get; }
 
@@ -121,8 +122,8 @@ namespace BillPay.Service
         /// <param name="entidade">The entity.</param>
         protected virtual void InternalInsert(T entity)
         {
-            var resultadoValidacao = this.Validador.AddValidator().Validar(entity);
-            this.GarantirValidacao(resultadoValidacao);
+            var resultadoValidacao = this.Validador.AddValidator().ValidateMethod(entity);
+            this.EnsureValidation(resultadoValidacao);
             this.BaseRepository.Insert(entity);
         }
 
@@ -132,9 +133,9 @@ namespace BillPay.Service
         /// <param name="entidade">The entity.</param>
         protected virtual void InternalUpdate(T entity)
         {
-            var resultadoValidacao = this.Validador.ValidadorAtualizacao().Validar(entity);
+            var resultadoValidacao = this.Validador.UpdateValidator().ValidateMethod(entity);
 
-            this.GarantirValidacao(resultadoValidacao);
+            this.EnsureValidation(resultadoValidacao);
 
             this.BaseRepository.Update(entity);
         }
@@ -145,21 +146,20 @@ namespace BillPay.Service
         /// <param name="entity">The entity.</param>
         protected virtual void InternalRemove(T entity)
         {
-            var resultadoValidacao = this.Validador.ValidadorRemocao().Validar(entity);
-            this.GarantirValidacao(resultadoValidacao);
+            var resultadoValidacao = this.Validador.DeleteValidator().ValidateMethod(entity);
+            this.EnsureValidation(resultadoValidacao);
             this.BaseRepository.Remove(entity);
         }
 
         /// <summary>
-        /// Garantir a validação.
+        /// Ensures the validation.
         /// </summary>
-        /// <param name="resultado">The resultado.</param>
-        /// <exception cref="FaultException{ResultadoValidacao}">Exceção com as regras de negócio.</exception>
-        protected void GarantirValidacao(ResultValidator resultado)
+        /// <param name="result">The result.</param>
+        protected void EnsureValidation(ResultValidator result)
         {
-            if (resultado != null && !resultado.EhValido())
+            if (result != null && !result.ResultIsValid())
             {
-                throw new BusinessException<ResultValidator>(resultado);
+                throw new BusinessException<ResultValidator>(result);
             }
         }
 

@@ -35,13 +35,13 @@ namespace BillPay.Domain.Entity
         public double CorrectedValueMDL { get; set; }
 
         /// <summary>
-        /// Gets the delayed days.
+        /// Gets or sets the MDL delayed days.
         /// </summary>
         [JsonIgnore]
         public int DelayedDaysMDL { get; set; }
 
         /// <summary>
-        /// Gets or sets the calculation rule.
+        /// Gets or sets the MDL calculation rule.
         /// </summary>
         [JsonIgnore]
         public string CalculationRule { get; set; }

@@ -1,9 +1,8 @@
 ﻿using BillPay.Domain.Entity;
-using BillPay.Domain.Interface;
+using BillPay.Domain.Interface.Repository;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
-using BillPay.Domain.Interface.Repository;
 
 namespace BillPay.Data
 {

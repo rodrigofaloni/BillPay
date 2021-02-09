@@ -1,10 +1,10 @@
 ﻿using BillPay.Domain.Entity;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BillPay.Domain.Validator.Base
 {
+    /// <summary>
+    /// Class thats implements the entity validator.
+    /// </summary>
     public class EntityValidator<T> : BaseValidator<T> where T : BaseEntity
     {
     }

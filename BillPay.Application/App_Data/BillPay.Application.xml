@@ -4,6 +4,24 @@
         <name>BillPay.Application</name>
     </assembly>
     <members>
+        <member name="T:BillPay.Application.Controllers.BaseController`2">
+            <summary>
+            Class that implements the base controller.
+            </summary>
+            <typeparam name="TService">The type of the service.</typeparam>
+            <typeparam name="TEntity">The type of the entity.</typeparam>
+        </member>
+        <member name="F:BillPay.Application.Controllers.BaseController`2._service">
+            <summary>
+            The service.
+            </summary>
+        </member>
+        <member name="M:BillPay.Application.Controllers.BaseController`2.#ctor(BillPay.Domain.Interface.Service.IBaseService{`1})">
+            <summary>
+            Initializes a new instance of the <see cref="T:BillPay.Application.Controllers.BaseController`2"/> class.
+            </summary>
+            <param name="service">The service.</param>
+        </member>
         <member name="M:BillPay.Application.Controllers.BaseController`2.Get">
             <summary>
             Lists all records.
@@ -12,32 +30,112 @@
         </member>
         <member name="M:BillPay.Application.Controllers.BaseController`2.Get(System.String)">
             <summary>
-            Consulta a entidade por id.
+            Gets the entity by identifier.
             </summary>
-            <param name="id">O id.</param>
-            <returns>A entidade consultada.</returns>
+            <param name="id">The identifier.</param>
+            <returns>Return the entity.</returns>
         </member>
         <member name="M:BillPay.Application.Controllers.BaseController`2.Post(`1)">
             <summary>
-            Inclui uma entidade.
+            Insert the specified entity.
             </summary>
-            <param name="entidade">A entidade a ser incluida.</param>
-            <returns>Retorna a entidade incluida.</returns>
+            <param name="entidade">The entidade.</param>
+            <returns>Return the id of entity.</returns>
         </member>
-        <member name="M:BillPay.Application.Controllers.BaseController`2.Put(System.String,`1)">
+        <member name="M:BillPay.Application.Controllers.BaseController`2.Put(`1)">
             <summary>
-            Altera uma entidade.
+            Update the specified entity.
             </summary>
-            <param name="id">O id da entidade a ser alterada.</param>
-            <param name="entidade">A entidade a ser alterada.</param>
-            <returns>A entidade alterada.</returns>
+            <param name="entidade">The entity.</param>
+            <returns>Return the id of entity.</returns>
+            <exception cref="T:BillPay.Domain.Validator.BusinessException`1">id - This field is required.</exception>
         </member>
         <member name="M:BillPay.Application.Controllers.BaseController`2.Delete(System.String)">
             <summary>
-            Exclui uma entidade.
+            Delete the specified entity.
             </summary>
-            <param name="id">O id da entidade a ser excluida.</param>
-            <returns>Retorno da operação da exclusão.</returns>
+            <param name="id">The identifier.</param>
+        </member>
+        <member name="T:BillPay.Application.Controllers.BillPayController">
+            <summary>
+            Class that implements the bill and pay controller.
+            </summary>
+        </member>
+        <member name="F:BillPay.Application.Controllers.BillPayController._billService">
+            <summary>
+            The bill service.
+            </summary>
+        </member>
+        <member name="F:BillPay.Application.Controllers.BillPayController._config">
+            <summary>
+            The configuration
+            </summary>
+        </member>
+        <member name="M:BillPay.Application.Controllers.BillPayController.#ctor(BillPay.Domain.Interface.Service.IBillService,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Initializes a new instance of the <see cref="T:BillPay.Application.Controllers.BillPayController"/> class.
+            </summary>
+            <param name="billService">The bill service.</param>
+            <param name="config">The configuration.</param>
+        </member>
+        <member name="T:BillPay.Application.Middlewares.ExceptionMiddlewareExtensions">
+            <summary>
+            The extension of middleware exception.
+            </summary>
+        </member>
+        <member name="M:BillPay.Application.Middlewares.ExceptionMiddlewareExtensions.ConfigureExceptionHandler(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Configures the exception handler.
+            </summary>
+            <param name="app">The application.</param>
+        </member>
+        <member name="M:BillPay.Application.Middlewares.ExceptionMiddlewareExtensions.GetErrorType(System.Exception)">
+            <summary>
+            Responsible to get the error type.
+            </summary>
+            <param name="exception">The exception.</param>
+            <returns>
+            Return the controlled return.
+            </returns>
+        </member>
+        <member name="M:BillPay.Application.Middlewares.ExceptionMiddlewareExtensions.ErrorMessageException(System.Exception)">
+            <summary>
+            Errors the message exception.
+            </summary>
+            <param name="excecao">The excecao.</param>
+            <returns>Return the error message exception.</returns>
+        </member>
+        <member name="M:BillPay.Application.Middlewares.ExceptionMiddlewareExtensions.ConvertInconsistencies(System.Collections.Generic.List{BillPay.Domain.Validator.Inconsistency})">
+            <summary>
+            Converts the inconsistencies.
+            </summary>
+            <param name="listItem">The lista.</param>
+            <returns>Return the list of inconsistencies.</returns>
+        </member>
+        <member name="M:BillPay.Application.Middlewares.ExceptionMiddlewareExtensions.SerializeWithIdentification(System.Object)">
+            <summary>
+            Serializes the with identification.
+            </summary>
+            <param name="objeto">The objeto.</param>
+            <returns>Return the json object.</returns>
+        </member>
+        <member name="T:BillPay.Application.Program">
+            <summary>
+            Class program of application.
+            </summary>
+        </member>
+        <member name="M:BillPay.Application.Program.Main(System.String[])">
+            <summary>
+            Defines the entry point of the application.
+            </summary>
+            <param name="args">The arguments.</param>
+        </member>
+        <member name="M:BillPay.Application.Program.CreateHostBuilder(System.String[])">
+            <summary>
+            Creates the host builder.
+            </summary>
+            <param name="args">The arguments.</param>
+            <returns>Return the host builder.</returns>
         </member>
         <member name="T:BillPay.Application.Startup">
             <summary>
@@ -77,11 +175,11 @@
             </summary>
             <param name="services">The services.</param>
         </member>
-        <member name="M:BillPay.Application.Startup.RegistraDadosSwagger(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+        <member name="M:BillPay.Application.Startup.RegisterSwaggerData(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>
-            Responsável em registrar os dados swagger.
+            Registers the swagger data.
             </summary>
-            <param name="services">Os services.</param>
+            <param name="services">The services.</param>
         </member>
         <member name="M:BillPay.Application.Util.Util.ExecutarServicoSeguroComRetorno(System.Func{System.Object},System.String)">
             <summary>

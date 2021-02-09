@@ -42,9 +42,9 @@ namespace BillPay.Application.Util
             return new ControlledReturn
             {
                 StatusCode = HttpStatusCode.OK,
-                Inconsistencias = null,
+                Inconsistencies = null,
                 Data = retorno,
-                Mensagem = mensagemSucesso
+                Message = mensagemSucesso
             };
         }
     }

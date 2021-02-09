@@ -1,9 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BillPay.Domain.Validator
 {
+    /// <summary>
+    /// Class that implements the not found exception.
+    /// </summary>
     public class NotFoundException : Exception
     {
     }

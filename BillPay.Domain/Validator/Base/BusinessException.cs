@@ -1,29 +1,48 @@
-﻿using BillPay.Domain.Entity;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 
 namespace BillPay.Domain.Validator
 {
+    /// <summary>
+    /// Class that implements the business exception.
+    /// </summary>
+    /// <typeparam name="TDetail">The type of the detail.</typeparam>
     public class BusinessException<TDetail> : Exception where TDetail : ResultValidator
     {
-        public BusinessException(TDetail resultado)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BusinessException{TDetail}"/> class.
+        /// </summary>
+        /// <param name="result">The resultado.</param>
+        public BusinessException(TDetail result)
         {
-            this.Detalhes = resultado;
+            this.Details = result;
         }
 
-        public BusinessException(string mensagem) : this(null, mensagem)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BusinessException{TDetail}"/> class.
+        /// </summary>
+        /// <param name="message">The message that describes the error.</param>
+        public BusinessException(string message) : this(null, message)
         {
         }
 
-        public BusinessException(string propriedade, string mensagem)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BusinessException{TDetail}"/> class.
+        /// </summary>
+        /// <param name="property">The property.</param>
+        /// <param name="message">The message.</param>
+        public BusinessException(string property, string message)
         {
-            var detalhes = new ResultValidator();
-            detalhes.AdicionarInconsistencia(new Inconsistency(propriedade, mensagem));
-            Detalhes = (TDetail)detalhes;
+            var detail = new ResultValidator();
+            detail.AddInconsistency(new Inconsistency(property, message));
+            Details = (TDetail)detail;
         }
 
-
-        public TDetail Detalhes { get; }
+        /// <summary>
+        /// Gets the details.
+        /// </summary>
+        /// <value>
+        /// The details.
+        /// </value>
+        public TDetail Details { get; }
     }
 }

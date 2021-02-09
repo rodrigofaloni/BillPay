@@ -1,37 +1,38 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BillPay.Domain.Validator
 {
+    /// <summary>
+    /// Class that implements the inconsistency.
+    /// </summary>
     [Serializable]
     public class Inconsistency
     {
         /// <summary>
-        /// Inicializa uma nova instância da classe <see cref="Inconsistencia"/> baseado na propriedade validada e na mensagem de erro.
+        /// Initializes a new instance of the <see cref="Inconsistency"/> class.
         /// </summary>
-        /// <param name="propriedadeValidada">A propriedade validada.</param>
-        /// <param name="mensagem">A mensagem para exibição.</param>
-        public Inconsistency(string propriedadeValidada, string mensagem)
+        /// <param name="validateProperty">The validate property.</param>
+        /// <param name="message">The message.</param>
+        public Inconsistency(string validateProperty, string message)
         {
-            this.PropriedadeValidada = propriedadeValidada;
-            this.Mensagem = mensagem;
+            this.ValidateProperty = validateProperty;
+            this.Message = message;
         }
 
         /// <summary>
-        /// Obtém ou define a propriedade validada, utilizada para vincular o a Inconsistencia a uma propriedade de um objeto.
+        /// Gets or sets the validate property.
         /// </summary>
         /// <value>
-        /// O nome da propriedade validada.
+        /// The validate property.
         /// </value>
-        public virtual string PropriedadeValidada { get; set; }
+        public virtual string ValidateProperty { get; set; }
 
         /// <summary>
-        /// Obtém ou define a Mensagem vinculada a Inconsistencia.
+        /// Gets or sets the message.
         /// </summary>
         /// <value>
-        /// A mensagem da Inconsistencia.
+        /// The message.
         /// </value>
-        public virtual string Mensagem { get; set; }
+        public virtual string Message { get; set; }
     }
 }

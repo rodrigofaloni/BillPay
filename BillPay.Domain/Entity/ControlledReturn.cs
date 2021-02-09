@@ -1,49 +1,50 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Net;
-using System.Text;
 
 namespace BillPay.Domain.Entity
 {
+    /// <summary>
+    /// Class that implements the controlled return.
+    /// </summary>
     public class ControlledReturn
     {
         /// <summary>
-        /// Cria uma nova instância da classe <see cref="Retorno"/>.
+        /// Initializes a new instance of the <see cref="ControlledReturn"/> class.
         /// </summary>
         public ControlledReturn()
         {
-            this.Inconsistencias = new List<InconsistencyModel>();
+            this.Inconsistencies = new List<InconsistencyModel>();
         }
 
         /// <summary>
-        /// Obtém ou define o status code.
+        /// Gets or sets the status code.
         /// </summary>
         /// <value>
-        /// O status code.
+        /// The status code.
         /// </value>
         public HttpStatusCode StatusCode { get; set; }
 
         /// <summary>
-        /// Obtém ou define a mensagem do retorno.
+        /// Gets or sets the message.
         /// </summary>
         /// <value>
-        /// A mensagem do retorno.
+        /// The message.
         /// </value>
-        public string Mensagem { get; set; }
+        public string Message { get; set; }
 
         /// <summary>
-        /// Obtém ou define as inconsistência do retorno.
+        /// Gets or sets the inconsistencies.
         /// </summary>
         /// <value>
-        /// The inconsistencias.
+        /// The inconsistencies.
         /// </value>
-        public List<InconsistencyModel> Inconsistencias { get; set; }
+        public List<InconsistencyModel> Inconsistencies { get; set; }
 
         /// <summary>
-        /// Obtém ou define dados complementares.
+        /// Gets or sets the data.
         /// </summary>
         /// <value>
-        /// Os dados complementares.
+        /// The data.
         /// </value>
         public object Data { get; set; }
     }
